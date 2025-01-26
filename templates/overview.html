@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <div class="header">
+        <a href="/">Home</a>
+        <a href="/overview">Overview</a>
+        <a href="/explore">Explore</a>
+    </div>
+
+    <div class="flex-center">
+        {{ all_sectors | safe }}
+    </div>
+
+    <div class="flex-center">
+        <div class="container-rows">
+            <div class="section">
+                {{ technology | safe }}
+            </div>
+            <div class="section">
+                {{ communication_services | safe }}
+            </div>
+            <div class="section">
+                {{ healthcare | safe }}
+            </div>
+            <div class="section">
+                {{ consumer_cyclical | safe }}
+            </div>
+            <div class="section">
+                {{ consumer_defensive | safe }}
+            </div>
+            <div class="section">
+                {{ financial_services | safe }}
+            </div>
+            <div class="section">
+                {{ industrials | safe }}
+            </div>
+            <div class="section">
+                {{ energy | safe }}
+            </div>
+            <div class="section">
+                {{ utilities | safe }}
+            </div>
+            <div class="section">
+                {{ real_estate | safe }}
+            </div>
+            <div class="section">
+                {{ basic_materials | safe }}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

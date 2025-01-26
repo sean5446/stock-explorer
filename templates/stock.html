@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ symbol }}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <div class="header">
+        <a href="/">Home</a>
+        <a href="/overview">Overview</a>
+        <a href="/explore">Explore</a>
+    </div>
+
+    <div class="section">
+        <h1>{{ symbol }}</h1>
+    </div>
+
+    <a href="/stock/{{ symbol }}?time=1mo"><button>1D</button></a>
+    <a href="/stock/{{ symbol }}?time=1mo"><button>1W</button></a>
+    <a href="/stock/{{ symbol }}?time=1mo"><button>1M</button></a>
+    <a href="/stock/{{ symbol }}?time=1yr"><button>1Y</button></a>
+    <a href="/stock/{{ symbol }}?time=5yr"><button>5Y</button></a>
+
+    {{ chart | safe}}
+
+    <div class="section">
+        {{ summary }}
+    </div>
+
+    <div class="section">
+        <table class="table-info">
+            {% for key, value in table.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+    </table>
+    </div>
+
+
+</body>
+</html>
