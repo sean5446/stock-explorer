@@ -27,7 +27,7 @@
                 <tr>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
-                    <td>{{ stock[2] }}</td>
+                    <td>${{ stock[2] }}</td>
                     <td><font color="lightgreen">{{ stock[5] }}%</font></td>
                     <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
@@ -47,7 +47,7 @@
                 <tr>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
-                    <td>{{ stock[2] }}</td>
+                    <td>${{ stock[2] }}</td>
                     <td><font color="red">{{ stock[5] }}%</font></td>
                     <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
@@ -68,14 +68,20 @@
                 <tr>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
-                    <td>{{ stock[2] }}</td>
-                    <td>{{ stock[3] }}</td>
+                    <td>${{ stock[2] }}</td>
+                    <td>${{ stock[3] }}</td>
                     <td>{{ stock[4] }}%</td>
                     <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
         </table>
     </div>
+
+    <br><br>
+
+    <h2><a href="/sectors">View Sectors</a></h2>
+
+    <br><br>
 
 </body>
 </html>
