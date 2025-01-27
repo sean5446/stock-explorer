@@ -84,3 +84,18 @@ def get_top_change(db: Session, sort='DESC', limit=15):
     """))
     return result.fetchall()
 
+
+def get_close_52wk_low(db: Session, limit=15):
+    result = db.execute(text(f"""
+    SELECT 
+        info->>'symbol' AS symbol,
+        info->>'shortName' AS short_name,
+        info->>'currentPrice' AS price,
+        info->>'fiftyTwoWeekLow' AS low,
+        ROUND(((info->>'currentPrice')::numeric - (info->>'fiftyTwoWeekLow')::numeric) / (info->>'currentPrice')::numeric  * 100, 2) AS percent
+    FROM stocks.yfinance y
+    where info->>'currentPrice' is not null and info->>'fiftyTwoWeekLow' is not null
+    ORDER BY percent DESC
+    LIMIT {limit};
+    """))
+    return result.fetchall()

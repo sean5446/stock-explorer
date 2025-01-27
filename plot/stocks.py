@@ -2,7 +2,7 @@
 import plotly.graph_objects as go
 
 
-def history_chart(ticker: str, data):
+def history_chart(ticker: str, time: str, data):
     close_history = data[0][2]
     dates = []
     prices = []
@@ -21,7 +21,7 @@ def history_chart(ticker: str, data):
     ))
 
     fig.update_layout(
-        title=f"{ticker} Close Price Over Time",
+        title=f"{ticker} Close Price Over {time}",
         title_x=0.5,
         xaxis=dict(tickformat="%Y-%m-%d", tickangle=45),
         template="plotly_dark",

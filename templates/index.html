@@ -26,10 +26,10 @@
             {% for stock in gainers %}
                 <tr>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
-                    <td>{{ stock[1] }}</td>
+                    <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
                     <td>{{ stock[2] }}</td>
                     <td>{{ stock[4] }}</td>
-                    <td>{{ stock[5] }}</td>
+                    <td><font color="lightgreen">{{ stock[5] }}</font></td>
                     <td>..</td>
                 </tr>
             {% endfor %}
@@ -46,11 +46,11 @@
             </tr>
             {% for stock in losers %}
                 <tr>
-                    <td>{{ stock[0] }}</td>
-                    <td>{{ stock[1] }}</td>
+                    <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
+                    <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
                     <td>{{ stock[2] }}</td>
                     <td>{{ stock[4] }}</td>
-                    <td>{{ stock[5] }}</td>
+                    <td><font color="red">{{ stock[5] }}</font></td>
                     <td>..</td>
                 </tr>
             {% endfor %}
@@ -61,17 +61,17 @@
                 <th>Symbol</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Change</th>
+                <th>Low</th>
                 <th>Percent</th>
                 <th>7day</th>
             </tr>
-            {% for stock in losers %}
+            {% for stock in close_to_low %}
                 <tr>
-                    <td>{{ stock[0] }}</td>
-                    <td>{{ stock[1] }}</td>
+                    <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
+                    <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
                     <td>{{ stock[2] }}</td>
+                    <td>{{ stock[3] }}</td>
                     <td>{{ stock[4] }}</td>
-                    <td>{{ stock[5] }}</td>
                     <td>..</td>
                 </tr>
             {% endfor %}

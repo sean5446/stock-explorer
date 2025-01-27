@@ -33,13 +33,16 @@ async def home(
     db: Session = Depends(get_db)
 ):
     symbol = '^DJI'
-    chart = repository.get_stock_history(db, symbol, '1mo')
+    time = '1mo'
+    chart = repository.get_stock_history(db, symbol, time)
     gainers = repository.get_top_change(db, "DESC")
-    losers = repository.get_top_change(db, "")
+    losers = repository.get_top_change(db, "ASC")
+    close_to_low = repository.get_close_52wk_low(db)
     context = {
-        "chart": history_chart(symbol, chart),
+        "chart": history_chart(symbol, time, chart),
         "gainers": gainers,
         "losers": losers,
+        "close_to_low": close_to_low,
     }
     return templates.TemplateResponse("index.html", {"request": request, **context})
 
@@ -92,7 +95,7 @@ async def stock(
         "symbol": symbol,
         "summary": stats.get('longBusinessSummary', 'Unknown'),
         "table": table,
-        "chart": history_chart(symbol, chart),
+        "chart": history_chart(symbol, time, chart),
     }
     return templates.TemplateResponse("stock.html", {"request": request, **context})
 

@@ -49,7 +49,7 @@ async def get_stock_five_year(
     data = repository.get_stock_five_year_history(db, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history_chart(ticker, data)
+    return history_chart(ticker, '5yr', data)
 
 
 @router.get("/chart/{ticker}/year/1", response_class=HTMLResponse)
@@ -60,10 +60,10 @@ async def get_stock_one_year(
     data = repository.get_stock_one_year_history(db, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history_chart(ticker, data)
+    return history_chart(ticker, '1yr', data)
 
 
-@router.get("/chart/{ticker}/minutes/1", response_class=HTMLResponse)
+@router.get("/chart/{ticker}/month/1", response_class=HTMLResponse)
 async def get_stock_time_range(
     ticker: str,
     db: Session = Depends(get_db)
@@ -71,7 +71,7 @@ async def get_stock_time_range(
     data = repository.get_stock_one_year_history(db, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history_chart(ticker, data)
+    return history_chart(ticker, '1mo', data)
 
 
 @router.get("/top", response_class=JSONResponse)
