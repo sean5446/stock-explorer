@@ -9,12 +9,6 @@
 </head>
 <body>
 
-    <div class="header">
-        <a href="/">Home</a>
-        <a href="/overview">Overview</a>
-        <a href="/explore">Explore</a>
-    </div>
-
     <div class="section">
         <h1>{{ symbol }}</h1>
     </div>
@@ -27,19 +21,19 @@
 
     {{ chart | safe}}
 
-    <div class="section">
+    <div>
         {{ summary }}
     </div>
 
-    <div class="section">
-        <table class="table-info">
+    <div>
+        <table>
             {% for key, value in table.items() %}
                 <tr>
                     <td>{{ key }}</td>
                     <td>{{ value }}</td>
                 </tr>
             {% endfor %}
-    </table>
+        </table>
     </div>
 
 

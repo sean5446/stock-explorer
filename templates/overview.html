@@ -9,49 +9,43 @@
 </head>
 <body>
 
-    <div class="header">
-        <a href="/">Home</a>
-        <a href="/overview">Overview</a>
-        <a href="/explore">Explore</a>
-    </div>
-
-    <div class="flex-center">
+    <div>
         {{ all_sectors | safe }}
     </div>
 
-    <div class="flex-center">
-        <div class="container-rows">
-            <div class="section">
+    <div>
+        <div>
+            <div>
                 {{ technology | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ communication_services | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ healthcare | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ consumer_cyclical | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ consumer_defensive | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ financial_services | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ industrials | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ energy | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ utilities | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ real_estate | safe }}
             </div>
-            <div class="section">
+            <div>
                 {{ basic_materials | safe }}
             </div>
         </div>

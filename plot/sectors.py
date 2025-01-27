@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 
-def human_readable_format(number):
+def number_to_shorthand(number):
     number = float(number)
     if number >= 1e12:
         return f'{number / 1e12:.2f}T'
@@ -17,32 +17,34 @@ def human_readable_format(number):
         return str(number)
 
 
-def top_in_sector(sector: str, data):
+def pie_chart(sector: str, data):
     df = pd.DataFrame(data, columns=['symbol', 'short_name', 'sector', 'market_cap'])
 
-    df['formatted_market_cap'] = df['market_cap'].apply(human_readable_format)
+    df['formatted_market_cap'] = df['market_cap'].apply(number_to_shorthand)
 
     fig = go.Figure(go.Pie(
-        labels=df['short_name'],
+        labels=df['symbol'], # short_name
         values=df['market_cap'], 
         hole=0.3,
         textinfo='none',
         hoverinfo='label+text+percent',
-        text=df['formatted_market_cap'],
+        text=df['formatted_market_cap'] + ' ' + df['short_name'],
     ))
 
-    # Customize the layout
     fig.update_layout(
-        title=f"Top 20 Companies by Market Cap in the {sector} Sector",
+        title=f"{sector}",
+        title_x=0.5,
         template="plotly_dark",
+        autosize=True,
     )
     return fig.to_html(include_plotlyjs='cdn', full_html=False)
 
 
-def get_all_sectors(data):
+def pie_chart_all(data):
     df = pd.DataFrame(data, columns=['symbol', 'short_name', 'sector', 'market_cap'])
 
     sector_market_cap = df.groupby('sector')['market_cap'].sum().reset_index()
+    sector_market_cap['sector'] = sector_market_cap['sector'].apply(lambda x: x[:11])
 
     fig = go.Figure(go.Pie(
         labels=sector_market_cap['sector'],
@@ -50,12 +52,13 @@ def get_all_sectors(data):
         hole=0.3,
         textinfo='none',
         hoverinfo='label+text+percent',
-        text=sector_market_cap['market_cap'].apply(human_readable_format),
+        text=sector_market_cap['market_cap'].apply(number_to_shorthand),
     ))
 
-    # Customize the layout
     fig.update_layout(
         title="Market Cap by Sector",
+        title_x=0.5,
         template="plotly_dark",
+        autosize=True,
     )
     return fig.to_html(include_plotlyjs='cdn', full_html=False)

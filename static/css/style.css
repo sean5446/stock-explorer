@@ -1,50 +1,49 @@
 body {
     font-family: "Open Sans", verdana, arial, sans-serif;
-    background-color: #1d1d1d;
+    background-color: rgb(17, 17, 17);
     color: #e9e9e9;
 }
 
 a {
     color: #e9e9e9;
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #5a5a5a;
-    border-bottom: 1px solid #ccc;
+
+table {
+    width: 100%; /* Adjust the width as needed */
+    border-collapse: collapse; /* Remove space between cells */
+    border-radius: 10px; /* Rounded corners for the whole table */
+    box-shadow: 0 4px 6px rgba(240, 239, 239, 0.7); /* Shadow at the bottom */
 }
 
-.flex-center {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
-}
-  
-.container-rows {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.container-columns {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-  
-.section {
+table th, table td {
     padding: 10px;
+    text-align: left; /* You can change this to 'center' or 'right' if needed */
 }
 
-table, th, td {
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-    padding: 10px;
+table tr {
+    border-bottom: 1px solid #ccc; /* Thin divider line between rows */
+}
+
+table th {
+    font-weight: bold;
+}
+
+/* Optional: Add a border radius to the cells' corners if needed */
+table td:first-child {
+    border-top-left-radius: 10px;
+}
+
+table td:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
 }

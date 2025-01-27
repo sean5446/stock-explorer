@@ -9,24 +9,73 @@
 </head>
 <body>
 
-    <div class="header">
-        <a href="/">Home</a>
-        <a href="/overview">Overview</a>
-        <a href="/explore">Explore</a>
-    </div>
-
-    <div class="flex-center">
-        <div class="container-columns">
-            <div class="section">
-                Top losers
-            </div>
-            <div class="section">
-                Top gainers
-            </div>
-            <div class="section">
-                Close to 52-week low
-            </div>
+    <div>
+        <div>
+            {{ chart | safe }}
         </div>
+        <h2>Top Gainers</h2>
+        <table>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Change</th>
+                <th>Percent</th>
+                <th>7day</th>
+            </tr>
+            {% for stock in gainers %}
+                <tr>
+                    <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
+                    <td>{{ stock[1] }}</td>
+                    <td>{{ stock[2] }}</td>
+                    <td>{{ stock[4] }}</td>
+                    <td>{{ stock[5] }}</td>
+                    <td>..</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h2>Top Losers</h2>
+        <table>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Change</th>
+                <th>Percent</th>
+                <th>7day</th>
+            </tr>
+            {% for stock in losers %}
+                <tr>
+                    <td>{{ stock[0] }}</td>
+                    <td>{{ stock[1] }}</td>
+                    <td>{{ stock[2] }}</td>
+                    <td>{{ stock[4] }}</td>
+                    <td>{{ stock[5] }}</td>
+                    <td>..</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h2>Close to 52 week low</h2>
+        <table>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Change</th>
+                <th>Percent</th>
+                <th>7day</th>
+            </tr>
+            {% for stock in losers %}
+                <tr>
+                    <td>{{ stock[0] }}</td>
+                    <td>{{ stock[1] }}</td>
+                    <td>{{ stock[2] }}</td>
+                    <td>{{ stock[4] }}</td>
+                    <td>{{ stock[5] }}</td>
+                    <td>..</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 
 </body>

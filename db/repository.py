@@ -66,3 +66,21 @@ def get_stock_stats(db: Session, ticker: str):
         {"ticker": ticker}
     )
     return result.fetchall()
+
+
+def get_top_change(db: Session, sort='DESC', limit=15):
+    result = db.execute(text(f"""
+    SELECT 
+        info->>'symbol' AS symbol,
+        info->>'shortName' AS short_name,
+        info->>'currentPrice' AS price,
+        info->>'regularMarketPreviousClose' AS close,
+        ROUND(((info->>'currentPrice')::numeric - (info->>'regularMarketPreviousClose')::numeric), 2) as change,
+        ROUND(((info->>'currentPrice')::numeric - (info->>'regularMarketPreviousClose')::numeric) / (info->>'currentPrice')::numeric  * 100, 2) AS percent
+    FROM stocks.yfinance y
+    where info->>'currentPrice' is not null and info->>'previousClose' is not null
+    ORDER BY percent {sort}
+    LIMIT {limit};
+    """))
+    return result.fetchall()
+

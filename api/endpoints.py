@@ -1,12 +1,13 @@
 # api/endpoints.py
+import json
 
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy.orm import Session
 
 from db import repository, SessionLocal
-from plot.sectors import top_in_sector, get_all_sectors
-from plot.stocks import history
+from plot.sectors import pie_chart, pie_chart_all
+from plot.stocks import history_chart
 
 
 router = APIRouter()
@@ -29,15 +30,15 @@ async def get_companies_by_sector(
     data = repository.get_top_companies_by_sector(db, sector_name, top)
     if not data:
         raise HTTPException(status_code=404, detail="No companies found for this sector.")
-    return top_in_sector(data)
+    return pie_chart(sector_name, data)
 
 
-@router.get("/sectors", response_class=HTMLResponse)
+@router.get("/sectors/all", response_class=HTMLResponse)
 async def get_sectors_market_cap(
     db: Session = Depends(get_db)
 ):
     data = repository.get_all_sectors(db)
-    return get_all_sectors(data)
+    return pie_chart_all(data)
 
 
 @router.get("/chart/{ticker}/year/5", response_class=HTMLResponse)
@@ -48,7 +49,7 @@ async def get_stock_five_year(
     data = repository.get_stock_five_year_history(db, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history(ticker, data)
+    return history_chart(ticker, data)
 
 
 @router.get("/chart/{ticker}/year/1", response_class=HTMLResponse)
@@ -59,7 +60,7 @@ async def get_stock_one_year(
     data = repository.get_stock_one_year_history(db, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history(ticker, data)
+    return history_chart(ticker, data)
 
 
 @router.get("/chart/{ticker}/minutes/1", response_class=HTMLResponse)
@@ -70,4 +71,14 @@ async def get_stock_time_range(
     data = repository.get_stock_one_year_history(db, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history(ticker, data)
+    return history_chart(ticker, data)
+
+
+@router.get("/top", response_class=JSONResponse)
+async def get_top(
+    order='DESC',
+    db: Session = Depends(get_db)
+):
+    data = repository.get_top_change(db, order)
+    rows = [tuple(row) for row in data]
+    return rows
