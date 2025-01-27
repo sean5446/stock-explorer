@@ -95,7 +95,7 @@ def get_close_52wk_low(db: Session, limit=15):
         ROUND(((info->>'currentPrice')::numeric - (info->>'fiftyTwoWeekLow')::numeric) / (info->>'currentPrice')::numeric  * 100, 2) AS percent
     FROM stocks.yfinance y
     where info->>'currentPrice' is not null and info->>'fiftyTwoWeekLow' is not null
-    ORDER BY percent DESC
+    ORDER BY percent ASC
     LIMIT {limit};
     """))
     return result.fetchall()

@@ -131,7 +131,7 @@ async def sectors(
         "real_estate": pie_chart('Real Estate', real_estate),
         "basic_materials": pie_chart('Basical Materials', basic_materials),
     }
-    return templates.TemplateResponse("overview.html", {"request": request, **context})
+    return templates.TemplateResponse("sectors.html", {"request": request, **context})
 
 
 @app.get("/jupyter")

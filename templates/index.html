@@ -21,7 +21,6 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Change</th>
-                <th>Percent</th>
                 <th>1mo</th>
             </tr>
             {% for stock in gainers %}
@@ -29,8 +28,7 @@
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
                     <td>{{ stock[2] }}</td>
-                    <td>{{ stock[4] }}</td>
-                    <td><font color="lightgreen">{{ stock[5] }}</font></td>
+                    <td><font color="lightgreen">{{ stock[5] }}%</font></td>
                     <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
@@ -43,7 +41,6 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Change</th>
-                <th>Percent</th>
                 <th>1mo</th>
             </tr>
             {% for stock in losers %}
@@ -51,8 +48,7 @@
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
                     <td>{{ stock[2] }}</td>
-                    <td>{{ stock[4] }}</td>
-                    <td><font color="red">{{ stock[5] }}</font></td>
+                    <td><font color="red">{{ stock[5] }}%</font></td>
                     <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
@@ -65,7 +61,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Low</th>
-                <th>Percent</th>
+                <th>Change</th>
                 <th>1mo</th>
             </tr>
             {% for stock in close_to_low %}
@@ -74,7 +70,7 @@
                     <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
                     <td>{{ stock[2] }}</td>
                     <td>{{ stock[3] }}</td>
-                    <td>{{ stock[4] }}</td>
+                    <td>{{ stock[4] }}%</td>
                     <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
