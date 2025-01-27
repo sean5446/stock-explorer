@@ -13,6 +13,7 @@
         <div>
             {{ chart | safe }}
         </div>
+        <br>
         <h2>Top Gainers</h2>
         <table>
             <tr>
@@ -21,7 +22,7 @@
                 <th>Price</th>
                 <th>Change</th>
                 <th>Percent</th>
-                <th>7day</th>
+                <th>1mo</th>
             </tr>
             {% for stock in gainers %}
                 <tr>
@@ -30,10 +31,11 @@
                     <td>{{ stock[2] }}</td>
                     <td>{{ stock[4] }}</td>
                     <td><font color="lightgreen">{{ stock[5] }}</font></td>
-                    <td>..</td>
+                    <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
         </table>
+        <br>
         <h2>Top Losers</h2>
         <table>
             <tr>
@@ -42,7 +44,7 @@
                 <th>Price</th>
                 <th>Change</th>
                 <th>Percent</th>
-                <th>7day</th>
+                <th>1mo</th>
             </tr>
             {% for stock in losers %}
                 <tr>
@@ -51,10 +53,11 @@
                     <td>{{ stock[2] }}</td>
                     <td>{{ stock[4] }}</td>
                     <td><font color="red">{{ stock[5] }}</font></td>
-                    <td>..</td>
+                    <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
         </table>
+        <br>
         <h2>Close to 52 week low</h2>
         <table>
             <tr>
@@ -63,7 +66,7 @@
                 <th>Price</th>
                 <th>Low</th>
                 <th>Percent</th>
-                <th>7day</th>
+                <th>1mo</th>
             </tr>
             {% for stock in close_to_low %}
                 <tr>
@@ -72,7 +75,7 @@
                     <td>{{ stock[2] }}</td>
                     <td>{{ stock[3] }}</td>
                     <td>{{ stock[4] }}</td>
-                    <td>..</td>
+                    <td><img src="/image/{{ stock[0] }}"></td>
                 </tr>
             {% endfor %}
         </table>

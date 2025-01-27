@@ -1,13 +1,13 @@
 # api/endpoints.py
-import json
+import io
 
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from sqlalchemy.orm import Session
 
 from db import repository, SessionLocal
 from plot.sectors import pie_chart, pie_chart_all
-from plot.stocks import history_chart
+from plot.stocks import history_chart, history_image
 
 
 router = APIRouter()
@@ -41,37 +41,16 @@ async def get_sectors_market_cap(
     return pie_chart_all(data)
 
 
-@router.get("/chart/{ticker}/year/5", response_class=HTMLResponse)
+@router.get("/chart/{ticker}/{time}", response_class=HTMLResponse)
 async def get_stock_five_year(
     ticker: str,
+    time='1yr',
     db: Session = Depends(get_db)
 ):
-    data = repository.get_stock_five_year_history(db, ticker)
+    data = repository.get_stock_history(db, time, ticker)
     if not data:
         raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history_chart(ticker, '5yr', data)
-
-
-@router.get("/chart/{ticker}/year/1", response_class=HTMLResponse)
-async def get_stock_one_year(
-    ticker: str,
-    db: Session = Depends(get_db)
-):
-    data = repository.get_stock_one_year_history(db, ticker)
-    if not data:
-        raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history_chart(ticker, '1yr', data)
-
-
-@router.get("/chart/{ticker}/month/1", response_class=HTMLResponse)
-async def get_stock_time_range(
-    ticker: str,
-    db: Session = Depends(get_db)
-):
-    data = repository.get_stock_one_year_history(db, ticker)
-    if not data:
-        raise HTTPException(status_code=404, detail=f"No data found for '{ticker}'.")
-    return history_chart(ticker, '1mo', data)
+    return history_chart(ticker, time, data)
 
 
 @router.get("/top", response_class=JSONResponse)
@@ -82,3 +61,12 @@ async def get_top(
     data = repository.get_top_change(db, order)
     rows = [tuple(row) for row in data]
     return rows
+
+
+@router.get("/image/{ticker}", response_class=StreamingResponse)
+async def get_image(
+    ticker: str,
+    db: Session = Depends(get_db)
+):
+    data = repository.get_stock_one_month_history(db, ticker)
+    return StreamingResponse(io.BytesIO(history_image(data)), media_type="image/png")

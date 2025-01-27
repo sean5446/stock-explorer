@@ -21,21 +21,19 @@
 
     {{ chart | safe}}
 
-    <div>
-        {{ summary }}
-    </div>
+    <table>
+        {% for key, value in table.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 
-    <div>
-        <table>
-            {% for key, value in table.items() %}
-                <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ value }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
 
+    <br><br>
+
+    {{ summary }}
 
 </body>
 </html>
