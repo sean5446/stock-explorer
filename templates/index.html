@@ -6,82 +6,103 @@
     <title>Home</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
     <link rel="stylesheet" href="static/css/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </head>
 <body>
+    <script>
+        function checkUserKeydown(event) {
+          return event instanceof KeyboardEvent
+        }
+        // wait for dom load
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("input-search").addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    window.location.href = "/stock/" + this.value;
+                }
+            });
+        });
+    </script>
 
     <div>
-        <div>
-            {{ chart | safe }}
-        </div>
-        <br>
-        <h2>Top Gainers</h2>
-        <table>
-            <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Change</th>
-                <th>1mo</th>
-            </tr>
-            {% for stock in gainers %}
-                <tr>
-                    <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
-                    <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
-                    <td>${{ stock[2] }}</td>
-                    <td><font color="lightgreen">{{ stock[5] }}%</font></td>
-                    <td><img src="/image/{{ stock[0] }}"></td>
-                </tr>
-            {% endfor %}
-        </table>
-        <br>
-        <h2>Top Losers</h2>
-        <table>
-            <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Change</th>
-                <th>1mo</th>
-            </tr>
-            {% for stock in losers %}
-                <tr>
-                    <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
-                    <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
-                    <td>${{ stock[2] }}</td>
-                    <td><font color="red">{{ stock[5] }}%</font></td>
-                    <td><img src="/image/{{ stock[0] }}"></td>
-                </tr>
-            {% endfor %}
-        </table>
-        <br>
-        <h2>Close to 52 week low</h2>
-        <table>
-            <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Low</th>
-                <th>Change</th>
-                <th>1mo</th>
-            </tr>
-            {% for stock in close_to_low %}
-                <tr>
-                    <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
-                    <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
-                    <td>${{ stock[2] }}</td>
-                    <td>${{ stock[3] }}</td>
-                    <td>{{ stock[4] }}%</td>
-                    <td><img src="/image/{{ stock[0] }}"></td>
-                </tr>
-            {% endfor %}
-        </table>
+        <input id="input-search"
+            list="word-list"
+            name="term"
+            hx-get="/search"
+            hx-target="#word-list"
+            hx-trigger="keyup[checkUserKeydown.call(this, event)] changed delay:50ms"
+        />
+        <datalist id="word-list"></datalist>
     </div>
 
-    <br><br>
-
-    <h2><a href="/sectors">View Sectors</a></h2>
+    {{ chart | safe }}
 
     <br><br>
+
+    <h2><a href="/sectors">Sector Overview</a></h2>
+
+    <br><br>
+
+    <h2>Top Gainers</h2>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Change</th>
+            <th>1mo</th>
+        </tr>
+        {% for stock in gainers %}
+            <tr>
+                <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
+                <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
+                <td>${{ stock[2] }}</td>
+                <td><font color="lightgreen">{{ stock[5] }}%</font></td>
+                <td><img src="/image/{{ stock[0] }}"></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Top Losers</h2>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Change</th>
+            <th>1mo</th>
+        </tr>
+        {% for stock in losers %}
+            <tr>
+                <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
+                <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
+                <td>${{ stock[2] }}</td>
+                <td><font color="red">{{ stock[5] }}%</font></td>
+                <td><img src="/image/{{ stock[0] }}"></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Close to 52 week low</h2>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Low</th>
+            <th>Change</th>
+            <th>1mo</th>
+        </tr>
+        {% for stock in close_to_low %}
+            <tr>
+                <td><a href="/stock/{{ stock[0] }}">{{ stock[0] }}</a></td>
+                <td><a href="/stock/{{ stock[0] }}">{{ stock[1] }}</a></td>
+                <td>${{ stock[2] }}</td>
+                <td>${{ stock[3] }}</td>
+                <td>{{ stock[4] }}%</td>
+                <td><img src="/image/{{ stock[0] }}"></td>
+            </tr>
+        {% endfor %}
+    </table>
 
 </body>
 </html>

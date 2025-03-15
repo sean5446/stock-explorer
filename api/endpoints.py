@@ -70,3 +70,13 @@ async def get_image(
 ):
     data = repository.get_stock_one_month_history(db, ticker)
     return StreamingResponse(io.BytesIO(history_image(data)), media_type="image/png")
+
+
+@router.get("/search", response_class=HTMLResponse)
+async def search(
+    term: str,
+    db: Session = Depends(get_db)
+):
+    data = repository.search(db, term)
+    rows = [f'<option value="{row[0]}">{row[0]} {row[1]}</option>' for row in data]
+    return '\n'.join(rows)

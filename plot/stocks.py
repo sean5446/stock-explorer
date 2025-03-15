@@ -2,6 +2,8 @@
 import plotly.graph_objects as go
 
 
+image_cache:dict[str, bytes] = dict()
+
 def history_chart(ticker: str, time: str, data):
     close_history = data[0][2]
     dates = []
@@ -32,6 +34,8 @@ def history_chart(ticker: str, time: str, data):
 
 
 def history_image(data, scale=0.1, width=10):
+    if image_cache.get(data[0][0]):
+        return image_cache[data[0][0]]
     close_history = data[0][2]
     dates = []
     prices = []
@@ -59,4 +63,7 @@ def history_image(data, scale=0.1, width=10):
         ),
         template="plotly_dark",
     )
-    return fig.to_image(format='png', scale=scale)
+
+    image_bytes = fig.to_image(format='png', scale=scale)
+    image_cache[data[0][0]] = image_bytes
+    return image_bytes

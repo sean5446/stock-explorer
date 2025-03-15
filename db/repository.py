@@ -2,7 +2,6 @@
 
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from typing import List, Dict
 
 
 def get_top_companies_by_sector(db: Session, sector_name: str, top_limit=20):
@@ -98,4 +97,18 @@ def get_close_52wk_low(db: Session, limit=15):
     ORDER BY percent ASC
     LIMIT {limit};
     """))
+    return result.fetchall()
+
+
+def search(db: Session, term: str, limit=10):
+    term = term.replace("'", "")
+    result = db.execute(
+        text(f"""
+        SELECT ticker, info->>'shortName' AS short_name
+        FROM stocks.yfinance
+        WHERE ticker ILIKE '%{term}%' OR info->>'shortName' ILIKE '%{term}%'
+        LIMIT {limit}
+        """),
+        {"term": term}
+    )
     return result.fetchall()
